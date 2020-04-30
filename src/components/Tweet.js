@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
 import { TiArrowBackOutline,TiHeartFullOutline,TiHeartOutline } from 'react-icons/ti/index';
+import {Link, withRouter} from 'react-router-dom';
 
 import {formatTweet,formatDate} from '../utils/helper';
 import {handleToggleTweet} from '../store/actions/tweets';
@@ -9,7 +10,7 @@ import {handleToggleTweet} from '../store/actions/tweets';
 class Tweet extends Component {
     toParent = (e, id) => {
         e.preventDefault();
-        // redirecting to the parent tweet
+        this.props.history.push(`/tweet/${id}`)
     }
 
     handleLike = (e) => {
@@ -36,11 +37,12 @@ class Tweet extends Component {
             hasLiked,
             likes,
             replies,
-            parent
+            parent,
+            id
         } = tweet;
 
         return(
-            <div className='tweet'>
+        <Link to={`/tweet/${id}`} className='tweet'>
                 <img 
                     src={avatar} 
                     alt={`Avatar of ${name}`}
@@ -68,7 +70,7 @@ class Tweet extends Component {
                     </div>
                 </div>
                 
-            </div>
+            </Link>
         )
     }
 }
@@ -83,4 +85,4 @@ const mapStateToProps = ({authUser,users,tweets},{id}) => {
     }
 }
 
-export default connect(mapStateToProps)(Tweet);
+export default withRouter(connect(mapStateToProps)(Tweet));
