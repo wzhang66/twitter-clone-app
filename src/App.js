@@ -5,6 +5,8 @@ import {LoadingBar} from 'react-redux-loading';
 import {handleInitialData} from './store/actions/shared';
 import './App.css';
 import Dashboard from './components/Dashboard';
+import NewTweet from './components/NewTweet';
+import TweetPage from './components/TweetPage';
 
 class App extends Component {
   componentDidMount(){
@@ -16,10 +18,16 @@ class App extends Component {
     return (
       <div>
         <LoadingBar />
-        {this.props.loading === true ? null : <Dashboard />}
+        {this.props.loading === true ? null : <TweetPage match={{params: {id:"2mb6re13q842wu8n106bhk"}}} />}
       </div>
     );
   }
 }
 
-export default connect()(App);
+const mapStateToProps = ({authUser}) => {
+  return{
+    loading: authUser === null
+  }
+}
+
+export default connect(mapStateToProps)(App);
